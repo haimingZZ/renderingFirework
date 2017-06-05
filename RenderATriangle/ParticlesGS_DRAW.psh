@@ -1,0 +1,23 @@
+#define DEBUG_PS   // Uncomment this line to debug vertex shaders 
+struct PSSceneIn
+{
+    float4 pos : SV_Position;
+    float2 tex : TEXTURE0;
+    float4 color : COLOR0;
+};
+
+Texture2D g_txDiffuse;
+SamplerState g_samLinear
+{
+    Filter = MIN_MAG_MIP_LINEAR;
+    AddressU = Clamp;
+    AddressV = Clamp;
+};
+
+//
+// PS for particles
+//
+float4 PSScenemain(PSSceneIn input) : SV_Target
+{   
+    return g_txDiffuse.Sample( g_samLinear, input.tex ) * input.color;
+}
